@@ -6,7 +6,8 @@
     "dev": "next dev --turbopack",
     "build": "prisma generate && next build",
     "start": "next start",
-    "test": "jest"
+    "test": "jest",
+    "postbuild": "prisma db push && prisma db seed"
   },
   "dependencies": {
     "@prisma/client": "^6.7.0",
