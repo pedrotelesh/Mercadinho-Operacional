@@ -1,4 +1,38 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Mercado Virtual para Funcionários
+
+Aplicação web de mercado virtual para funcionários, feita com Next.js, Prisma ORM e SQLite.
+
+## Funcionalidades
+- Autenticação de usuário e admin
+- Painel do admin: gerenciar usuários, produtos, ver compras e notificações
+- Painel do usuário: ver saldo, comprar produtos, histórico de compras
+- Notificações para admin ao ocorrer uma compra
+
+## Tecnologias
+- Next.js (App Router, TypeScript, Tailwind)
+- Prisma ORM
+- SQLite
+
+## Como rodar
+1. Instale as dependências:
+   ```bash
+   npm install
+   ```
+2. Rode as migrations do banco:
+   ```bash
+   npx prisma migrate dev
+   ```
+3. Inicie o servidor de desenvolvimento:
+   ```bash
+   npm run dev
+   ```
+
+## Estrutura
+- `src/app` - Páginas e rotas
+- `src/generated/prisma` - Prisma Client
+- `prisma/schema.prisma` - Schema do banco
+
+Troque as imagens de produtos em `public/` conforme desejar.
 
 ## Getting Started
 

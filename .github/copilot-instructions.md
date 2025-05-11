@@ -1,0 +1,3 @@
+<!-- Use this file to provide workspace-specific custom instructions to Copilot. For mais detalhes, visite https://code.visualstudio.com/docs/copilot/copilot-customization#_use-a-githubcopilotinstructionsmd-file -->
+
+Este projeto é um mercado virtual para funcionários, feito em Next.js, Prisma e SQLite. Siga o padrão de organização de pastas do Next.js (src/app para rotas e páginas, src/generated/prisma para client do Prisma). Use autenticação simples, APIs REST e SSR/CSR conforme necessário.
