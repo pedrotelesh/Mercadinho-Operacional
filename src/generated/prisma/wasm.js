@@ -133,7 +133,8 @@ exports.Prisma.ProductScalarFieldEnum = {
   name: 'name',
   description: 'description',
   price: 'price',
-  imageUrl: 'imageUrl'
+  imageUrl: 'imageUrl',
+  estoque: 'estoque'
 };
 
 exports.Prisma.PurchaseScalarFieldEnum = {

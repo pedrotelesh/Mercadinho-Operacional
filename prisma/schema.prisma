@@ -29,6 +29,7 @@ model Product {
   description String
   price       Float
   imageUrl    String
+  estoque     Int      @default(0) // Novo campo de estoque
   purchases   Purchase[]
 }
 

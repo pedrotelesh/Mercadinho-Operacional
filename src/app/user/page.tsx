@@ -38,6 +38,7 @@ interface Product {
   description: string;
   price: number;
   imageUrl: string;
+  estoque: number; // Adicionado campo de estoque
 }
 
 export default function UserDashboard() {
@@ -105,6 +106,10 @@ export default function UserDashboard() {
       fetch(`/api/purchases/history?userId=${user.id}`)
         .then(res => res.json())
         .then(setHistory);
+      // Atualiza produtos para refletir estoque novo
+      fetch("/api/products")
+        .then(res => res.json())
+        .then(setProducts);
     } else {
       const data = await res.json();
       setPopup({ msg: data.error || "Erro ao comprar", type: "error" });
@@ -165,7 +170,8 @@ export default function UserDashboard() {
               {products.map(prod => (
                 <div key={prod.id} className="bg-neutral-900 rounded-2xl shadow-xl p-6 flex flex-col items-center text-center min-w-[280px]">
                   <div className="text-2xl font-extrabold text-yellow-200 mb-1">{prod.name}</div>
-                  <div className="text-lg font-bold text-gray-100 mb-4">R${prod.price.toFixed(2)}</div>
+                  <div className="text-lg font-bold text-gray-100 mb-1">R${prod.price.toFixed(2)}</div>
+                  <div className="text-yellow-200 font-bold mb-2">Estoque: {prod.estoque}</div>
                   <div className="bg-gray-200 rounded-xl w-full h-32 flex items-center justify-center mb-4">
                     <Image 
                       src={prod.imageUrl} 
@@ -179,10 +185,10 @@ export default function UserDashboard() {
                   <div className="text-white font-semibold mb-4">{prod.description}</div>
                   <button
                     className="bg-yellow-300 hover:bg-yellow-400 text-black font-extrabold text-xl rounded-xl px-8 py-3 mt-auto transition shadow-lg disabled:opacity-50 w-full"
-                    disabled={user.balance < prod.price}
+                    disabled={prod.estoque === 0 || user.balance < prod.price}
                     onClick={() => handleBuy(prod.id, prod.price)}
                   >
-                    {user.balance < prod.price ? 'SALDO INSUFICIENTE' : 'COMPRAR'}
+                    {prod.estoque === 0 ? 'SEM ESTOQUE' : user.balance < prod.price ? 'SALDO INSUFICIENTE' : 'COMPRAR'}
                   </button>
                 </div>
               ))}

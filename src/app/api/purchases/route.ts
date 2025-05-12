@@ -18,12 +18,21 @@ export async function POST(req: NextRequest) {
   if (!user || !product) {
     return NextResponse.json({ error: "Usuário ou produto não encontrado" }, { status: 400 });
   }
+  if (product.estoque <= 0) {
+    return NextResponse.json({ error: "Produto sem estoque" }, { status: 400 });
+  }
   if (user.balance < product.price) {
     return NextResponse.json({ error: "Saldo insuficiente" }, { status: 400 });
   }
+  // Atualiza saldo do usuário
   await prisma.user.update({
     where: { id: userId },
     data: { balance: { decrement: product.price } },
+  });
+  // Decrementa estoque do produto
+  await prisma.product.update({
+    where: { id: productId },
+    data: { estoque: { decrement: 1 } },
   });
   const purchase = await prisma.purchase.create({
     data: {

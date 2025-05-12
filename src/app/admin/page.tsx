@@ -33,6 +33,7 @@ interface Product {
   description: string;
   price: number;
   imageUrl: string;
+  estoque: number; // Adicionado campo de estoque
 }
 interface Purchase {
   id: number;
@@ -312,18 +313,21 @@ export default function AdminDashboard() {
                 <div className="flex-1 flex flex-col">
                   <h2 className="text-4xl font-extrabold text-yellow-100 mb-6">PRODUTOS</h2>
                   <div className="bg-neutral-900 rounded-2xl shadow-xl p-6 w-full">
-                    <div className="grid grid-cols-4 text-center mb-4 w-full">
-                      <div className="text-yellow-200 text-2xl font-extrabold uppercase text-left pl-4">IMAGEM</div>
+                    <div className="grid grid-cols-7 text-center mb-4 w-full">
+                      <div className="text-yellow-200 text-2xl font-extrabold uppercase text-left pl-4">IMG</div>
                       <div className="text-yellow-200 text-2xl font-extrabold uppercase">NOME</div>
-                      <div className="text-yellow-200 text-2xl font-extrabold uppercase">DESCRIÇÃO</div>
+                      <div className="text-yellow-200 text-2xl font-extrabold uppercase">DESC</div>
                       <div className="text-yellow-200 text-2xl font-extrabold uppercase">PREÇO</div>
+                      <div className="text-yellow-200 text-2xl font-extrabold uppercase">QTD</div>
+                      <div className="text-yellow-200 text-2xl font-extrabold uppercase">ADD</div>
+                      <div className="text-yellow-200 text-2xl font-extrabold uppercase">REM</div>
                     </div>
                     <div className="divide-y divide-gray-800 w-full">
                       {products.length === 0 ? (
                         <div className="text-gray-300 text-center py-8">Nenhum produto cadastrado ainda.</div>
                       ) : (
                         products.map(p => (
-                          <div key={p.id} className="grid grid-cols-4 items-center py-4 w-full text-center">
+                          <div key={p.id} className="grid grid-cols-7 items-center py-4 w-full text-center">
                             <div className="flex items-center gap-2 text-left pl-4">
                               <button
                                 className="bg-red-600 hover:bg-red-700 text-white rounded px-2 py-1 text-xs font-semibold transition-colors duration-150 mr-2"
@@ -348,6 +352,9 @@ export default function AdminDashboard() {
                             <div className="text-white text-lg font-bold break-words min-w-[100px]">{p.name}</div>
                             <div className="text-white text-base break-words max-w-xs mx-auto">{p.description}</div>
                             <div className="text-green-400 text-lg font-bold min-w-[70px]">R$ {p.price}</div>
+                            <div className="text-yellow-200 text-lg font-bold">{p.estoque}</div>
+                            <div className="flex justify-center"><AddEstoque productId={p.id} onSuccess={refreshProducts} /></div>
+                            <div className="flex justify-center"><RemoverEstoque productId={p.id} estoqueAtual={p.estoque} onSuccess={refreshProducts} /></div> 
                           </div>
                         ))
                       )}
@@ -563,6 +570,7 @@ function FormProduto({ onSuccess }: { onSuccess: () => void }) {
   const [descricao, setDescricao] = useState("");
   const [preco, setPreco] = useState("");
   const [imagem, setImagem] = useState("");
+  const [estoque, setEstoque] = useState("");
   const [loading, setLoading] = useState(false);
   const [popup, setPopup] = useState<{ msg: string; type: "error" | "success" } | null>(null);
 
@@ -570,7 +578,8 @@ function FormProduto({ onSuccess }: { onSuccess: () => void }) {
     setPopup(null);
     setLoading(true);
     const valor = parseFloat(preco.replace(",", "."));
-    if (!nome || !descricao || isNaN(valor) || valor <= 0 || !imagem) {
+    const estoqueInt = parseInt(estoque);
+    if (!nome || !descricao || isNaN(valor) || valor <= 0 || !imagem || isNaN(estoqueInt) || estoqueInt < 0) {
       setPopup({ msg: "Preencha todos os campos corretamente", type: "error" });
       setLoading(false);
       return;
@@ -578,11 +587,11 @@ function FormProduto({ onSuccess }: { onSuccess: () => void }) {
     const res = await fetch("/api/products", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name: nome, description: descricao, price: valor, imageUrl: imagem }),
+      body: JSON.stringify({ name: nome, description: descricao, price: valor, imageUrl: imagem, estoque: estoqueInt }),
     });
     setLoading(false);
     if (res.ok) {
-      setNome(""); setDescricao(""); setPreco(""); setImagem("");
+      setNome(""); setDescricao(""); setPreco(""); setImagem(""); setEstoque("");
       setPopup({ msg: "Produto cadastrado!", type: "success" });
       onSuccess();
     } else {
@@ -605,6 +614,10 @@ function FormProduto({ onSuccess }: { onSuccess: () => void }) {
         <span className="absolute -top-2 left-3 font-bold text-base tracking-wide bg-neutral-900 px-1 z-10 label-admin" style={{lineHeight:1}}>Preço</span>
       </div>
       <div className="relative">
+        <input type="number" min="0" step="1" value={estoque} onChange={e => setEstoque(e.target.value)} className="peer w-full rounded-2xl px-4 bg-black text-white border-4 border-white focus:border-yellow-200 outline-none text-base font-semibold transition-all duration-150" style={{ paddingTop: '0.75rem', paddingBottom: '0.75rem', height: '44px' }} autoComplete="off" disabled={loading} required />
+        <span className="absolute -top-2 left-3 font-bold text-base tracking-wide bg-neutral-900 px-1 z-10 label-admin" style={{lineHeight:1}}>Estoque Inicial</span>
+      </div>
+      <div className="relative">
         <input type="text" value={imagem} onChange={e => setImagem(e.target.value)} className="peer w-full rounded-2xl px-4 bg-black text-white border-4 border-white focus:border-yellow-200 outline-none text-base font-semibold transition-all duration-150" style={{ paddingTop: '0.75rem', paddingBottom: '0.75rem', height: '44px' }} autoComplete="off" disabled={loading} required />
         <span className="absolute -top-2 left-3 font-bold text-base tracking-wide bg-neutral-900 px-1 z-10 label-admin" style={{lineHeight:1}}>URL da Imagem</span>
       </div>
@@ -613,6 +626,118 @@ function FormProduto({ onSuccess }: { onSuccess: () => void }) {
       </button>
       <Popup message={popup?.msg || ""} type={popup?.type || "error"} onClose={() => setPopup(null)} />
     </form>
+  );
+}
+
+function AddEstoque({ productId, onSuccess }: { productId: number; onSuccess: () => void }) {
+  const [valor, setValor] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [popup, setPopup] = useState<{ msg: string; type: "error" | "success" } | null>(null);
+
+  async function adicionar() {
+    setPopup(null);
+    setLoading(true);
+    const v = parseInt(valor);
+    if (isNaN(v) || v < 0) {
+      setPopup({ msg: "Valor inválido", type: "error" });
+      setLoading(false);
+      return;
+    }
+    const res = await fetch("/api/products", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id: productId, amount: v }),
+    });
+    setLoading(false);
+    if (res.ok) {
+      setValor("");
+      setPopup({ msg: "Estoque adicionado!", type: "success" });
+      onSuccess();
+    } else {
+      const data = await res.json();
+      setPopup({ msg: data.error || "Erro ao adicionar estoque", type: "error" });
+    }
+  }
+
+  return (
+    <div className="flex gap-2 items-center relative">
+      <input
+        type="number"
+        min="0"
+        step="1"
+        value={valor}
+        onChange={e => setValor(e.target.value)}
+        className="border border-gray-400 p-1 rounded w-16 text-sm bg-black text-white"
+        placeholder="Qtd"
+        disabled={loading}
+      />
+      <button
+        className="bg-green-700 hover:bg-green-800 text-white font-bold rounded px-3 py-1 text-base disabled:opacity-50"
+        onClick={adicionar}
+        disabled={loading || !valor || parseInt(valor) < 0}
+        type="button"
+      >+</button>
+      <Popup message={popup?.msg || ""} type={popup?.type || "error"} onClose={() => setPopup(null)} />
+    </div>
+  );
+}
+
+function RemoverEstoque({ productId, estoqueAtual, onSuccess }: { productId: number; estoqueAtual: number; onSuccess: () => void }) {
+  const [valor, setValor] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [popup, setPopup] = useState<{ msg: string; type: "error" | "success" } | null>(null);
+
+  async function remover() {
+    setPopup(null);
+    setLoading(true);
+    const v = parseInt(valor);
+    if (isNaN(v) || v < 0) {
+      setPopup({ msg: "Valor inválido", type: "error" });
+      setLoading(false);
+      return;
+    }
+    if (v > estoqueAtual) {
+      setPopup({ msg: "Não pode remover mais do que o estoque atual", type: "error" });
+      setLoading(false);
+      return;
+    }
+    const res = await fetch("/api/products", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id: productId, amount: -v }),
+    });
+    setLoading(false);
+    if (res.ok) {
+      setValor("");
+      setPopup({ msg: "Estoque removido!", type: "success" });
+      onSuccess();
+    } else {
+      const data = await res.json();
+      setPopup({ msg: data.error || "Erro ao remover estoque", type: "error" });
+    }
+  }
+
+  return (
+    <div className="flex gap-2 items-center relative">
+      <input
+        type="number"
+        min="0"
+        max={estoqueAtual}
+        step="1"
+        value={valor}
+        onChange={e => setValor(e.target.value)}
+        className="border border-gray-400 p-1 rounded w-16 text-sm bg-black text-white"
+        placeholder="Qtd"
+        disabled={loading}
+      />
+      <button
+        className="bg-red-700 hover:bg-red-800 text-white font-bold rounded px-3 py-1 text-base disabled:opacity-50"
+        onClick={remover}
+        disabled={loading || !valor || parseInt(valor) < 0 || parseInt(valor) > estoqueAtual}
+        type="button"
+      >-</button>
+      <Popup message={popup?.msg || ""} type={popup?.type || "error"} onClose={() => setPopup(null)} />
+    </div>
   );
 }
 

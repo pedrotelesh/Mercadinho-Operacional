@@ -3,7 +3,13 @@ import { prisma } from "@/lib/prisma";
 
 // PATCH: marca uma compra como vista/não vista pelo admin
 export async function PATCH(req: NextRequest) {
-  const { purchaseId, seen } = await req.json();
+  let data;
+  try {
+    data = await req.json();
+  } catch {
+    return NextResponse.json({ error: "JSON inválido ou ausente" }, { status: 400 });
+  }
+  const { purchaseId, seen } = data;
   if (typeof purchaseId !== "number" || typeof seen !== "boolean") {
     return NextResponse.json({ error: "Dados inválidos" }, { status: 400 });
   }
