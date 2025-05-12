@@ -172,7 +172,7 @@ export default function UserDashboard() {
                   <div className="text-2xl font-extrabold text-yellow-200 mb-1">{prod.name}</div>
                   <div className="text-lg font-bold text-gray-100 mb-1">R${prod.price.toFixed(2)}</div>
                   <div className="text-yellow-200 font-bold mb-2">Estoque: {prod.estoque}</div>
-                  <div className="bg-gray-200 rounded-xl w-full h-32 flex items-center justify-center mb-4">
+                  <div className="bg-gray-200 rounded-xl w-full h-32 flex items-center justify-center mb-4 relative overflow-hidden">
                     <Image 
                       src={prod.imageUrl} 
                       alt={prod.name} 
@@ -181,6 +181,30 @@ export default function UserDashboard() {
                       className="h-20 w-full object-cover opacity-60 mx-auto rounded-xl" 
                       style={{objectFit: 'cover'}}
                     />
+                    {prod.estoque === 0 && (
+                      <div style={{
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        width: '150%', // cobre toda a diagonal
+                        height: '38px',
+                        transform: 'translate(-50%, -50%) rotate(-25deg)',
+                        background: 'rgba(220, 38, 38, 0.95)',
+                        color: 'white',
+                        fontWeight: 'bold',
+                        fontSize: '1.2rem',
+                        textAlign: 'center',
+                        letterSpacing: '2px',
+                        lineHeight: '38px',
+                        zIndex: 10,
+                        boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
+                        pointerEvents: 'none',
+                        userSelect: 'none',
+                        textShadow: '0 1px 4px #0008'
+                      }}>
+                        SEM ESTOQUE
+                      </div>
+                    )}
                   </div>
                   <div className="text-white font-semibold mb-4">{prod.description}</div>
                   <button
