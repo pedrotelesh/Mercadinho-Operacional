@@ -177,9 +177,10 @@ export default function UserDashboard() {
                       src={prod.imageUrl} 
                       alt={prod.name} 
                       width={120} 
-                      height={80} 
+                      height={120} 
                       className="h-20 w-full object-cover mx-auto rounded-xl" 
                       style={{objectFit: 'cover'}}
+                      loading="lazy"
                     />
                     {prod.estoque === 0 && (
                       <div style={{
