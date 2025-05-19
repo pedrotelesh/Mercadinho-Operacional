@@ -55,18 +55,17 @@ export default function UserDashboard() {
       return;
     }
     const localUser = JSON.parse(u);
-    // Busca o usuário atualizado do backend
+    // Evita chamar a API de admin para usuários não administradores
+    if (!localUser.isAdmin) {
+      setUser(localUser);
+      return;
+    }
+    // Busca o usuário atualizado do backend apenas se for admin
     fetch(`/api/admin/users?id=${localUser.id}`)
       .then(res => res.ok ? res.json() : localUser)
       .then(data => {
         const updatedUser = Array.isArray(data) ? data[0] : data;
         if (updatedUser && typeof updatedUser.balance === 'number') {
-          // Garante que não é admin
-          if (updatedUser.isAdmin) {
-            localStorage.removeItem("user");
-            router.push("/login");
-            return;
-          }
           setUser(updatedUser);
           localStorage.setItem("user", JSON.stringify(updatedUser));
         } else {
