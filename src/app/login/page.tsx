@@ -97,7 +97,7 @@ export default function LoginPage() {
         )}
         <button
           type="submit"
-          className="w-full bg-yellow-400 hover:bg-yellow-500 text-black font-semibold text-xl rounded-xl py-4 mt-2 transition shadow-lg"
+          className="hover:scale-105 cursor-pointer w-full bg-yellow-200 hover:bg-yellow-500 text-black font-semibold text-xl rounded-xl py-4 mt-2 transition shadow-lg"
         >
           ENTRAR
         </button>

@@ -153,10 +153,10 @@ export default function AdminDashboard() {
             Painel do <span className="text-yellow-200">Admin</span>
           </h1>
           <div className="flex gap-4 items-center">
-            <button className={tab === "compras" ? "bg-yellow-200 text-black font-bold px-4 py-1 rounded-xl text-lg shadow" : "bg-white text-black font-bold px-4 py-1 rounded-xl text-lg shadow"} onClick={() => setTab("compras")}>HISTÓRICO</button>
-            <button className={tab === "usuarios" ? "bg-yellow-200 text-black font-bold px-4 py-1 rounded-xl text-lg shadow" : "bg-white text-black font-bold px-4 py-1 rounded-xl text-lg shadow"} onClick={() => setTab("usuarios")}>USUÁRIOS</button>
-            <button className={tab === "produtos" ? "bg-yellow-200 text-black font-bold px-4 py-1 rounded-xl text-lg shadow" : "bg-white text-black font-bold px-4 py-1 rounded-xl text-lg shadow"} onClick={() => setTab("produtos")}>PRODUTOS</button>
-            <button className="bg-red-600 hover:bg-red-700 text-white font-bold px-6 py-1 rounded-xl text-lg shadow ml-4" onClick={() => { localStorage.removeItem("user"); router.push("/login"); }}>SAIR</button>
+            <button className={tab === "compras" ? "hover:scale-105 cursor-pointer bg-yellow-200 text-black font-bold px-4 py-1 rounded-xl text-lg shadow" : "hover:bg-yellow-200 hover:scale-105 cursor-pointer bg-white text-black font-bold px-4 py-1 rounded-xl text-lg shadow"} onClick={() => setTab("compras")}>HISTÓRICO</button>
+            <button className={tab === "usuarios" ? "hover:scale-105 cursor-pointer bg-yellow-200 text-black font-bold px-4 py-1 rounded-xl text-lg shadow" : "hover:bg-yellow-200 hover:scale-105 cursor-pointer bg-white text-black font-bold px-4 py-1 rounded-xl text-lg shadow"} onClick={() => setTab("usuarios")}>USUÁRIOS</button>
+            <button className={tab === "produtos" ? "hover:scale-105 cursor-pointer bg-yellow-200 text-black font-bold px-4 py-1 rounded-xl text-lg shadow" : "hover:bg-yellow-200 hover:scale-105 cursor-pointer bg-white text-black font-bold px-4 py-1 rounded-xl text-lg shadow"} onClick={() => setTab("produtos")}>PRODUTOS</button>
+            <button className="hover:scale-105 cursor-pointer bg-red-600 hover:bg-red-700 text-white font-bold px-6 py-1 rounded-xl text-lg shadow ml-4" onClick={() => { localStorage.removeItem("user"); router.push("/login"); }}>SAIR</button>
           </div>
         </div>
         {loading ? <div className="text-gray-100">Carregando...</div> : (
@@ -219,7 +219,7 @@ export default function AdminDashboard() {
                                       <div className="text-white text-lg font-bold flex items-center justify-center">{formatDate(p.createdAt)}</div>
                                       <div className="flex justify-center">
                                         <button
-                                          className="bg-red-600 hover:bg-red-700 text-white rounded px-2 py-1 text-xs font-semibold transition-colors duration-150"
+                                          className="hover:scale-105 cursor-pointer bg-red-600 hover:bg-red-700 text-white rounded px-2 py-1 text-xs font-semibold transition-colors duration-150"
                                           title="Excluir e reembolsar"
                                           onClick={async () => {
                                             if (confirm("Excluir este item do histórico e reembolsar o usuário?")) {
@@ -282,7 +282,7 @@ export default function AdminDashboard() {
                         <div key={u.id} className="grid grid-cols-4 items-center py-3 w-full">
                           <div className="flex items-center gap-2 text-left pl-4">
                             <button
-                              className={`bg-red-600 hover:bg-red-700 text-white rounded px-2 py-1 text-xs font-semibold transition-colors duration-150${u.name === "admin.plus" ? " opacity-50 cursor-not-allowed" : ""}`}
+                              className={`hover:scale-105 bg-red-600 hover:bg-red-700 text-white rounded px-2 py-1 text-xs font-semibold transition-colors duration-150${u.name === "admin.plus" ? " opacity-50 cursor-not-allowed" : " cursor-pointer"}`}
                               title={u.name === "admin.plus" ? "Não é possível remover o admin.plus" : "Remover usuário"}
                               onClick={() => handleRemoveUser(u)}
                               disabled={u.name === "admin.plus"}
@@ -330,7 +330,7 @@ export default function AdminDashboard() {
                           <div key={p.id} className="grid grid-cols-7 items-center py-4 w-full text-center">
                             <div className="flex items-center gap-2 text-left pl-4">
                               <button
-                                className="bg-red-600 hover:bg-red-700 text-white rounded px-2 py-1 text-xs font-semibold transition-colors duration-150 mr-2"
+                                className="hover:scale-105 cursor-pointer bg-red-600 hover:bg-red-700 text-white rounded px-2 py-1 text-xs font-semibold transition-colors duration-150 mr-2"
                                 title="Remover produto"
                                 onClick={async () => {
                                   if (confirm("Remover produto?")) {
@@ -346,7 +346,7 @@ export default function AdminDashboard() {
                                 <span role="img" aria-label="remover">🗑️</span>
                               </button>
                               <div className="bg-gray-200 rounded-xl w-20 h-12 flex items-center justify-center overflow-hidden">
-                                <Image src={p.imageUrl} alt={p.name} width={80} height={48} className="h-12 w-full object-cover opacity-80 mx-auto rounded-xl" style={{objectFit: 'cover'}} />
+                                <Image src={p.imageUrl} alt={p.name} width={80} height={48} className="h-12 w-full object-cover mx-auto rounded-xl" style={{objectFit: 'cover'}} />
                               </div>
                             </div>
                             <div className="text-white text-lg font-bold break-words min-w-[100px]">{p.name}</div>
@@ -430,7 +430,7 @@ function AddSaldo({ userId, onSuccess }: { userId: number; onSuccess: () => void
         placeholder="R$"
       />
       <button
-        className="bg-green-700 hover:bg-green-800 text-white font-bold rounded px-4 py-1 text-base disabled:opacity-50"
+        className="hover:scale-105 cursor-pointer bg-green-700 hover:bg-green-800 text-white font-bold rounded px-4 py-1 text-base disabled:opacity-50"
         onClick={adicionar}
         disabled={loading}
         type="button"
@@ -479,7 +479,7 @@ function RemoverSaldo({ userId, onSuccess }: { userId: number; onSuccess: () => 
         placeholder="R$"
       />
       <button
-        className="bg-red-700 hover:bg-red-800 text-white font-bold rounded px-4 py-1 text-base disabled:opacity-50"
+        className="hover:scale-105 cursor-pointer bg-red-700 hover:bg-red-800 text-white font-bold rounded px-4 py-1 text-base disabled:opacity-50"
         onClick={remover}
         disabled={loading}
         type="button"
@@ -553,7 +553,7 @@ function CriarUsuario({ onSuccess }: { onSuccess: () => void }) {
           </div>
           <button
             type="submit"
-            className="bg-yellow-200 hover:bg-yellow-300 text-black font-bold rounded-xl px-4 py-3 text-lg shadow disabled:opacity-60 transition mt-2"
+            className="hover:scale-105 cursor-pointer bg-yellow-200 hover:bg-yellow-300 text-black font-bold rounded-xl px-4 py-3 text-lg shadow disabled:opacity-60 transition mt-2"
             disabled={loading}
           >
             {loading ? "Criando..." : "Criar Usuário"}
@@ -621,7 +621,7 @@ function FormProduto({ onSuccess }: { onSuccess: () => void }) {
         <input type="text" value={imagem} onChange={e => setImagem(e.target.value)} className="peer w-full rounded-2xl px-4 bg-black text-white border-4 border-white focus:border-yellow-200 outline-none text-base font-semibold transition-all duration-150" style={{ paddingTop: '0.75rem', paddingBottom: '0.75rem', height: '44px' }} autoComplete="off" disabled={loading} required />
         <span className="absolute -top-2 left-3 font-bold text-base tracking-wide bg-neutral-900 px-1 z-10 label-admin" style={{lineHeight:1}}>URL da Imagem</span>
       </div>
-      <button type="submit" className="bg-yellow-200 hover:bg-yellow-300 text-black font-bold rounded-xl px-4 py-3 text-lg shadow disabled:opacity-60 transition mt-2" disabled={loading}>
+      <button type="submit" className="hover:scale-105 cursor-pointer bg-yellow-200 hover:bg-yellow-300 text-black font-bold rounded-xl px-4 py-3 text-lg shadow disabled:opacity-60 transition mt-2" disabled={loading}>
         {loading ? "Cadastrando..." : "Cadastrar Produto"}
       </button>
       <Popup message={popup?.msg || ""} type={popup?.type || "error"} onClose={() => setPopup(null)} />
@@ -672,7 +672,7 @@ function AddEstoque({ productId, onSuccess }: { productId: number; onSuccess: ()
         disabled={loading}
       />
       <button
-        className="bg-green-700 hover:bg-green-800 text-white font-bold rounded px-3 py-1 text-base disabled:opacity-50"
+        className="hover:scale-105 cursor-pointer bg-green-700 hover:bg-green-800 text-white font-bold rounded px-3 py-1 text-base disabled:opacity-50"
         onClick={adicionar}
         disabled={loading || !valor || parseInt(valor) < 0}
         type="button"
@@ -731,7 +731,7 @@ function RemoverEstoque({ productId, estoqueAtual, onSuccess }: { productId: num
         disabled={loading}
       />
       <button
-        className="bg-red-700 hover:bg-red-800 text-white font-bold rounded px-3 py-1 text-base disabled:opacity-50"
+        className="hover:scale-105 cursor-pointer bg-red-700 hover:bg-red-800 text-white font-bold rounded px-3 py-1 text-base disabled:opacity-50"
         onClick={remover}
         disabled={loading || !valor || parseInt(valor) < 0 || parseInt(valor) > estoqueAtual}
         type="button"

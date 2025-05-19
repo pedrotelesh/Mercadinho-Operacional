@@ -159,7 +159,7 @@ export default function UserDashboard() {
             <span className="bg-green-200 text-green-900 px-4 py-1 rounded-xl text-lg font-bold shadow">
               Saldo: <span className="text-green-900">R$ {typeof user?.balance === 'number' ? user.balance.toFixed(2) : '0,00'}</span>
             </span>
-            <button className="bg-red-600 hover:bg-red-700 text-white font-bold px-6 py-1 rounded-xl text-lg shadow" onClick={() => { localStorage.removeItem("user"); router.push("/login"); }}>SAIR</button>
+            <button className="hover:scale-105 cursor-pointer bg-red-600 hover:bg-red-700 text-white font-bold px-6 py-1 rounded-xl text-lg shadow" onClick={() => { localStorage.removeItem("user"); router.push("/login"); }}>SAIR</button>
           </div>
         </div>
         <div className="flex flex-col md:flex-row gap-4 md:gap-8 pt-4 md:pt-8">
@@ -178,7 +178,7 @@ export default function UserDashboard() {
                       alt={prod.name} 
                       width={120} 
                       height={80} 
-                      className="h-20 w-full object-cover opacity-60 mx-auto rounded-xl" 
+                      className="h-20 w-full object-cover mx-auto rounded-xl" 
                       style={{objectFit: 'cover'}}
                     />
                     {prod.estoque === 0 && (
@@ -208,7 +208,7 @@ export default function UserDashboard() {
                   </div>
                   <div className="text-white font-semibold mb-4">{prod.description}</div>
                   <button
-                    className="bg-yellow-300 hover:bg-yellow-400 text-black font-extrabold text-xl rounded-xl px-8 py-3 mt-auto transition shadow-lg disabled:opacity-50 w-full"
+                    className="hover:scale-105 cursor-pointer bg-yellow-200 hover:bg-yellow-500 text-black font-extrabold text-xl rounded-xl px-8 py-3 mt-auto transition shadow-lg disabled:opacity-50 w-full"
                     disabled={prod.estoque === 0 || user.balance < prod.price}
                     onClick={() => handleBuy(prod.id, prod.price)}
                   >

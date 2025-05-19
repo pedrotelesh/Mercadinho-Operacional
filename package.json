@@ -10,7 +10,8 @@
     "postbuild": "prisma db push && prisma db seed"
   },
   "dependencies": {
-    "@prisma/client": "^6.7.0",
+    "@prisma/client": "^6.8.2",
+    "@prisma/extension-accelerate": "^2.0.0",
     "bcryptjs": "^3.0.2",
     "next": "15.3.2",
     "prisma": "^6.7.0",
