@@ -178,7 +178,7 @@ export default function UserDashboard() {
                       width={120} 
                       height={120} 
                       className="h-20 w-full object-cover mx-auto rounded-xl" 
-                      style={{objectFit: 'cover'}}
+                      style={{objectFit: 'contain'}}
                       loading="lazy"
                     />
                   </div>

@@ -346,7 +346,7 @@ export default function AdminDashboard() {
                                 <span role="img" aria-label="remover">🗑️</span>
                               </button>
                               <div className="bg-gray-200 rounded-xl w-20 h-12 flex items-center justify-center overflow-hidden">
-                                <Image src={p.imageUrl} alt={p.name} width={80} height={48} className="h-12 w-full object-cover mx-auto rounded-xl" style={{objectFit: 'cover'}} />
+                                <Image src={p.imageUrl} alt={p.name} width={80} height={48} className="h-12 w-full object-cover mx-auto rounded-xl" style={{objectFit: 'contain'}} />
                               </div>
                             </div>
                             <div className="text-white text-lg font-bold break-words min-w-[100px]">{p.name}</div>
