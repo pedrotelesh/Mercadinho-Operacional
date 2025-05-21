@@ -26,6 +26,14 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+@font-face {
+  font-family: 'DynaPuff';
+  src: url('/DynaPuff.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 button, .font-dyna {
-  font-family: 'DynaPuff', cursive;
+  font-family: 'DynaPuff', cursive, sans-serif;
 }
