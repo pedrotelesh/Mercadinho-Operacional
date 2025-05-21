@@ -28,23 +28,16 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center bg-black relative overflow-hidden">
-      {/* Grid de fundo */}
-      <div className="absolute inset-0 z-0 pointer-events-none">
-        <svg width="100%" height="100%" className="w-full h-full" style={{ position: 'absolute', top: 0, left: 0 }}>
-          <defs>
-            <pattern id="grid" width="80" height="80" patternUnits="userSpaceOnUse">
-              <rect width="80" height="80" fill="none" stroke="#222" strokeWidth="1" />
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#grid)" />
-        </svg>
-      </div>
+    <div className="min-h-screen flex flex-col justify-center items-center bg-white relative overflow-hidden bg-[url('/fundo.webp')] bg-no-repeat bg-cover bg-center sm:bg-[url('/fundo.webp'),url('/fundo.webp'),url('/fundo.webp')] sm:bg-[length:33.3%_auto] sm:bg-[position:left_15%,center_15%,right_15%] sm:pt-20 sm:pb-20">
+      <div
+        className="absolute inset-0"
+        style={{ backgroundColor: "rgba(255, 255, 255, 0.3)", zIndex: 1 }}
+      ></div>
       <form
         onSubmit={handleSubmit}
-        className="z-10 bg-neutral-900 rounded-2xl shadow-xl px-10 py-10 flex flex-col gap-6 w-full max-w-md items-center"
+        className="z-10 bg-neutral-900 rounded-2xl shadow-xl px-4 py-6 flex flex-col gap-4 w-full max-w-xs sm:max-w-md sm:px-10 sm:py-10 sm:gap-6 items-center"
       >
-        <h1 className="text-4xl font-extrabold text-gray-100 text-center mb-2">Login</h1>
+        <h1 className="text-4xl md:text-6xl font-extrabold text-gray-100 text-center mb-2 font-dyna">LOGIN</h1>
         <style jsx global>{`
           .label-login {
             color: #fff;
@@ -75,7 +68,7 @@ export default function LoginPage() {
             style={{ paddingTop: '0.75rem', paddingBottom: '0.75rem', height: '44px' }}
             required
           />
-          <span className="absolute -top-2 left-3 font-bold text-base tracking-wide bg-neutral-900 px-1 z-10 transition-colors duration-150 label-login" style={{lineHeight:1}}>Usuário</span>
+          <span className="absolute -top-2 left-3 font-bold text-base tracking-wide bg-neutral-900 px-1 z-10 transition-colors duration-150 label-login font-dyna" style={{lineHeight:1}}>Usuário</span>
         </div>
         <div className="relative w-full">
           <input
@@ -86,7 +79,7 @@ export default function LoginPage() {
             style={{ paddingTop: '0.75rem', paddingBottom: '0.75rem', height: '44px' }}
             required
           />
-          <span className="absolute -top-2 left-3 font-bold text-base tracking-wide bg-neutral-900 px-1 z-10 transition-colors duration-150 label-login" style={{lineHeight:1}}>Senha</span>
+          <span className="absolute -top-2 left-3 font-bold text-base tracking-wide bg-neutral-900 px-1 z-10 transition-colors duration-150 label-login font-dyna" style={{lineHeight:1}}>Senha</span>
         </div>
         {error && (
           <div className="text-red-600 text-base text-center font-semibold">
@@ -97,12 +90,12 @@ export default function LoginPage() {
         )}
         <button
           type="submit"
-          className="hover:scale-105 cursor-pointer w-full bg-yellow-200 hover:bg-yellow-500 text-black font-semibold text-xl rounded-xl py-4 mt-2 transition shadow-lg"
+          className="hover:cursor-pointer bg-red-600 text-black font-bold text-2xl px-12 py-2 rounded-full shadow-lg hover:bg-red-700 transition-transform transform hover:scale-105 border-b-4 border-r-4 border-black md:text-4xl"
         >
-          ENTRAR
+          LOGIN
         </button>
       </form>
-      <footer className="z-10 absolute bottom-8 left-0 w-full text-center text-gray-200 text-base opacity-90">
+      <footer className="z-10 absolute bottom-8 left-0 w-full text-center text-black text-base">
         © Plus Promotora 2025
       </footer>
     </div>

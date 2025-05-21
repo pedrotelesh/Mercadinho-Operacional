@@ -135,13 +135,13 @@ export default function AdminDashboard() {
   if (!admin) return null;
 
   return (
-    <div className="min-h-screen flex flex-col justify-start items-center bg-black relative overflow-hidden">
-      {/* Grid de fundo */}
+    <div className="min-h-screen flex flex-col justify-start items-center bg-white relative overflow-hidden">
+      {/* Grid de fundo quadriculado cinza */}
       <div className="absolute inset-0 z-0 pointer-events-none">
-        <svg width="100%" height="100%" className="w-full h-full" style={{position:'absolute',top:0,left:0}}>
+        <svg width="100%" height="100%" className="w-full h-full blur-[1px]" style={{position:'absolute',top:0,left:0}}>
           <defs>
             <pattern id="grid" width="80" height="80" patternUnits="userSpaceOnUse">
-              <rect width="80" height="80" fill="none" stroke="#222" strokeWidth="1" />
+              <rect width="80" height="80" fill="none" stroke="#edecec" strokeWidth="1" />
             </pattern>
           </defs>
           <rect width="100%" height="100%" fill="url(#grid)" />
@@ -149,30 +149,30 @@ export default function AdminDashboard() {
       </div>
       <div className="z-10 w-full max-w-6xl px-2 pt-10 pb-24">
         <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-2 md:mb-4">
-          <h1 className="text-3xl md:text-4xl font-extrabold text-gray-100 mb-2 md:mb-0">
-            Painel do <span className="text-yellow-200">Admin</span>
+          <h1 className="text-3xl md:text-4xl font-extrabold text-black mb-2 md:mb-0 font-dyna">
+            Painel da <span className="text-yellow-600">Thay</span>
           </h1>
-          <div className="flex gap-4 items-center">
-            <button className={tab === "compras" ? "hover:scale-105 cursor-pointer bg-yellow-200 text-black font-bold px-4 py-1 rounded-xl text-lg shadow" : "hover:bg-yellow-200 hover:scale-105 cursor-pointer bg-white text-black font-bold px-4 py-1 rounded-xl text-lg shadow"} onClick={() => setTab("compras")}>HISTÓRICO</button>
-            <button className={tab === "usuarios" ? "hover:scale-105 cursor-pointer bg-yellow-200 text-black font-bold px-4 py-1 rounded-xl text-lg shadow" : "hover:bg-yellow-200 hover:scale-105 cursor-pointer bg-white text-black font-bold px-4 py-1 rounded-xl text-lg shadow"} onClick={() => setTab("usuarios")}>USUÁRIOS</button>
-            <button className={tab === "produtos" ? "hover:scale-105 cursor-pointer bg-yellow-200 text-black font-bold px-4 py-1 rounded-xl text-lg shadow" : "hover:bg-yellow-200 hover:scale-105 cursor-pointer bg-white text-black font-bold px-4 py-1 rounded-xl text-lg shadow"} onClick={() => setTab("produtos")}>PRODUTOS</button>
-            <button className="hover:scale-105 cursor-pointer bg-red-600 hover:bg-red-700 text-white font-bold px-6 py-1 rounded-xl text-lg shadow ml-4" onClick={() => { localStorage.removeItem("user"); router.push("/login"); }}>SAIR</button>
+          <div className="flex flex-wrap gap-2 md:gap-4 items-center justify-center md:justify-start">
+            <button className={tab === "compras" ? "hover:scale-105 cursor-pointer bg-yellow-200 text-black font-bold px-4 py-1 rounded-xl text-lg shadow border-b-4 border-r-4  border-yellow-600" : "hover:border-yellow-600 hover:scale-105 cursor-pointer bg-white text-black font-bold px-4 py-1 rounded-xl text-lg shadow border-b-4 border-r-4 border-black"} onClick={() => setTab("compras")}>HISTÓRICO</button>
+            <button className={tab === "usuarios" ? "hover:scale-105 cursor-pointer bg-yellow-200 text-black font-bold px-4 py-1 rounded-xl text-lg shadow border-b-4 border-r-4 border-yellow-600" : "hover:border-yellow-600 hover:scale-105 cursor-pointer bg-white text-black font-bold px-4 py-1 rounded-xl text-lg shadow border-b-4 border-r-4 border-black"} onClick={() => setTab("usuarios")}>USUÁRIOS</button>
+            <button className={tab === "produtos" ? "hover:scale-105 cursor-pointer bg-yellow-200 text-black font-bold px-4 py-1 rounded-xl text-lg shadow border-b-4 border-r-4 border-yellow-600" : "hover:border-yellow-600 hover:scale-105 cursor-pointer bg-white text-black font-bold px-4 py-1 rounded-xl text-lg shadow border-b-4 border-r-4 border-black"} onClick={() => setTab("produtos")}>PRODUTOS</button>
+            <button className="text-black hover:scale-105 hover:cursor-pointer shadow-lg hover:bg-red-700 hover:border-red-900 transition-transform transform bg-red-600 font-bold px-6 py-1 rounded-xl text-lg font-dyna border-b-4 border-r-4 border-black" onClick={() => { localStorage.removeItem("user"); router.push("/login"); }}>SAIR</button>
           </div>
         </div>
         {loading ? <div className="text-gray-100">Carregando...</div> : (
           <>
             {tab === "compras" && (
               <div className="w-full flex flex-col pt-4 md:pt-8">
-                <h2 className="text-3xl font-extrabold text-yellow-100 mb-8 text-center w-full">HISTÓRICO DE COMPRAS</h2>
-                <div className="bg-neutral-900 rounded-2xl shadow-xl px-8 py-8 w-full flex flex-col">
-                  <div className="w-full mb-2">
-                    <div className="grid grid-cols-6 text-center">
-                      <div className="text-yellow-200 text-2xl font-extrabold uppercase">USUÁRIO</div>
-                      <div className="text-yellow-200 text-2xl font-extrabold uppercase">PRODUTO</div>
-                      <div className="text-yellow-200 text-2xl font-extrabold uppercase">PREÇO</div>
-                      <div className="text-yellow-200 text-2xl font-extrabold uppercase">DATA</div>
-                      <div className="text-yellow-200 text-2xl font-extrabold uppercase">REEMBOLSAR</div>
-                      <div className="text-yellow-200 text-2xl font-extrabold uppercase">PAGO</div>
+                <h2 className="text-4xl font-extrabold text-black mb-8 text-center w-full font-dyna">HISTÓRICO DE COMPRAS</h2>
+                <div className="bg-neutral-900 rounded-2xl shadow-xl px-2 sm:px-8 py-6 sm:py-8 w-full flex flex-col">
+                  <div className="w-full mb-2 items-center">
+                    <div className="grid grid-cols-1 sm:grid-cols-6 text-center gap-y-2">
+                      <div className="text-yellow-200 text-2xl font-extrabold uppercase font-dyna sm:block hidden">USUÁRIO</div>
+                      <div className="text-yellow-200 text-2xl font-extrabold uppercase font-dyna sm:block hidden">PRODUTO</div>
+                      <div className="text-yellow-200 text-2xl font-extrabold uppercase font-dyna sm:block hidden">PREÇO</div>
+                      <div className="text-yellow-200 text-2xl font-extrabold uppercase font-dyna sm:block hidden">DATA</div>
+                      <div className="text-yellow-200 text-2xl font-extrabold uppercase font-dyna sm:block hidden">REEMBOLSAR</div>
+                      <div className="text-yellow-200 text-2xl font-extrabold uppercase font-dyna sm:block hidden">PAGO</div>
                     </div>
                   </div>
                   <ul className="w-full divide-y divide-gray-800">
@@ -212,12 +212,73 @@ export default function AdminDashboard() {
                               {isExpanded && (
                                 <ul className="divide-y divide-gray-800">
                                   {sortedItems.map((p) => (
-                                    <li key={p.id} className="grid grid-cols-6 items-center py-3 text-center">
-                                      <div className="text-white text-lg font-bold flex items-center justify-center">{p.user.name}</div>
-                                      <div className="text-white text-lg font-bold flex items-center justify-center">{p.product.name}</div>
-                                      <div className="text-green-400 text-lg font-bold flex items-center justify-center">R$ {p.product.price}</div>
-                                      <div className="text-white text-lg font-bold flex items-center justify-center">{formatDate(p.createdAt)}</div>
-                                      <div className="flex justify-center">
+                                    <li key={p.id}
+                                      className="py-3 text-center grid grid-cols-3 items-center gap-2 md:grid-cols-6 md:gap-0 bg-black/10 rounded-xl md:bg-transparent md:rounded-none md:text-center"
+                                    >
+                                      {/* Mobile: cada campo em linha, com label */}
+                                      <div className="flex flex-col md:hidden text-left px-2 gap-1">
+                                        <span className="text-yellow-200 text-xs font-bold uppercase font-dyna">Usuário</span>
+                                        <span className="text-white text-base font-bold">{p.user.name}</span>
+                                      </div>
+                                      <div className="flex flex-col md:hidden text-left px-2 gap-1">
+                                        <span className="text-yellow-200 text-xs font-bold uppercase font-dyna">Produto</span>
+                                        <span className="text-white text-base font-bold">{p.product.name}</span>
+                                      </div>
+                                      <div className="flex flex-col md:hidden text-left px-2 gap-1">
+                                        <span className="text-yellow-200 text-xs font-bold uppercase font-dyna">Preço</span>
+                                        <span className="text-green-400 text-base font-bold">R$ {p.product.price}</span>
+                                      </div>
+                                      <div className="flex flex-col md:hidden text-left px-2 gap-1">
+                                        <span className="text-yellow-200 text-xs font-bold uppercase font-dyna">Data</span>
+                                        <span className="text-white text-base font-bold">{formatDate(p.createdAt)}</span>
+                                      </div>
+                                      <div className="flex flex-col md:hidden text-left px-2 gap-1">
+                                        <span className="text-yellow-200 text-xs font-bold uppercase font-dyna">Reembolsar</span>
+                                        <span>
+                                          <button
+                                            className="hover:scale-105 cursor-pointer bg-red-600 hover:bg-red-700 text-white rounded px-2 py-1 text-xs font-semibold transition-colors duration-150"
+                                            title="Excluir e reembolsar"
+                                            onClick={async () => {
+                                              if (confirm("Excluir este item do histórico e reembolsar o usuário?")) {
+                                                await fetch("/api/purchases", {
+                                                  method: "DELETE",
+                                                  headers: { "Content-Type": "application/json", "x-admin": "true" },
+                                                  body: JSON.stringify({ purchaseId: p.id }),
+                                                });
+                                                refreshPurchases();
+                                                refreshUsers();
+                                              }
+                                            }}
+                                          >
+                                            <span role="img" aria-label="remover">🗑️</span>
+                                          </button>
+                                        </span>
+                                      </div>
+                                      <div className="flex flex-col md:hidden text-left px-2 gap-1">
+                                        <span className="text-yellow-200 text-xs font-bold uppercase font-dyna">Pago</span>
+                                        <span>
+                                          <input
+                                            type="checkbox"
+                                            checked={p.seenByAdmin}
+                                            onChange={async (e) => {
+                                              await fetch("/api/purchases/seen", {
+                                                method: "PATCH",
+                                                headers: { "Content-Type": "application/json", "x-admin": "true" },
+                                                body: JSON.stringify({ purchaseId: p.id, seen: e.target.checked }),
+                                              });
+                                              refreshPurchases();
+                                            }}
+                                            className="w-5 h-5 accent-yellow-400 cursor-pointer"
+                                            title="Marcar como pago"
+                                          />
+                                        </span>
+                                      </div>
+                                      {/* Desktop: grid 6 colunas */}
+                                      <div className="hidden md:flex text-white text-lg font-bold items-center justify-center">{p.user.name}</div>
+                                      <div className="hidden md:flex text-white text-lg font-bold items-center justify-center">{p.product.name}</div>
+                                      <div className="hidden md:flex text-green-400 text-lg font-bold items-center justify-center">R$ {p.product.price}</div>
+                                      <div className="hidden md:flex text-white text-lg font-bold items-center justify-center">{formatDate(p.createdAt)}</div>
+                                      <div className="hidden md:flex justify-center">
                                         <button
                                           className="hover:scale-105 cursor-pointer bg-red-600 hover:bg-red-700 text-white rounded px-2 py-1 text-xs font-semibold transition-colors duration-150"
                                           title="Excluir e reembolsar"
@@ -229,14 +290,14 @@ export default function AdminDashboard() {
                                                 body: JSON.stringify({ purchaseId: p.id }),
                                               });
                                               refreshPurchases();
-                                              refreshUsers(); // Atualiza também o saldo dos usuários
+                                              refreshUsers();
                                             }
                                           }}
                                         >
                                           <span role="img" aria-label="remover">🗑️</span>
                                         </button>
                                       </div>
-                                      <div className="flex justify-center items-center">
+                                      <div className="hidden md:flex justify-center items-center">
                                         <input
                                           type="checkbox"
                                           checked={p.seenByAdmin}
@@ -266,21 +327,16 @@ export default function AdminDashboard() {
               </div>
             )}
             {tab === "usuarios" && (
-              <div className="flex flex-col md:flex-row gap-8 w-full pt-4 md:pt-8">
+              <div className="flex flex-col md:flex-row gap-8 w-full pt-4 md:pt-8 items-start">
                 {/* Tabela de usuários */}
                 <div className="flex-1 flex flex-col">
-                  <h2 className="text-4xl font-extrabold text-yellow-100 mb-6">USUÁRIOS</h2>
+                  <h2 className="text-4xl font-extrabold text-black mb-6 font-dyna">USUÁRIOS</h2>
                   <div className="bg-neutral-900 rounded-2xl shadow-xl p-6 w-full">
-                    <div className="grid grid-cols-4 text-center mb-4 w-full">
-                      <div className="text-yellow-200 text-2xl font-extrabold uppercase text-left pl-4">NOME</div>
-                      <div className="text-yellow-200 text-2xl font-extrabold uppercase">SALDO</div>
-                      <div className="text-yellow-200 text-2xl font-extrabold uppercase">ADICIONAR</div>
-                      <div className="text-yellow-200 text-2xl font-extrabold uppercase">REMOVER</div>
-                    </div>
-                    <div className="divide-y divide-gray-800 w-full">
+                    {/* Mobile/tablet grid */}
+                    <div className="grid grid-cols-2 sm:grid-cols-2 gap-6 justify-items-center md:hidden">
                       {users.map(u => (
-                        <div key={u.id} className="grid grid-cols-4 items-center py-3 w-full">
-                          <div className="flex items-center gap-2 text-left pl-4">
+                        <div key={u.id} className="flex flex-col gap-2 bg-black/10 rounded-xl max-w-xs w-full p-4">
+                          <div className="flex items-center gap-2">
                             <button
                               className={`hover:scale-105 bg-red-600 hover:bg-red-700 text-white rounded px-2 py-1 text-xs font-semibold transition-colors duration-150${u.name === "admin.plus" ? " opacity-50 cursor-not-allowed" : " cursor-pointer"}`}
                               title={u.name === "admin.plus" ? "Não é possível remover o admin.plus" : "Remover usuário"}
@@ -291,44 +347,80 @@ export default function AdminDashboard() {
                             </button>
                             <span className="text-white text-lg font-bold">{u.name}</span>
                           </div>
-                          <div className="text-green-400 text-lg font-bold text-center">R${u.balance}</div>
-                          <div className="flex justify-end items-center gap-2 pr-6">
-                            <AddSaldo userId={u.id} onSuccess={refreshUsers} />
+                          <div className="flex flex-col gap-1">
+                            <span className="text-yellow-200 text-xs font-bold uppercase font-dyna">Saldo</span>
+                            <span className="text-green-400 text-lg font-bold">R${u.balance}</span>
                           </div>
-                          <div className="flex justify-end items-center gap-2 pr-6">
-                            <RemoverSaldo userId={u.id} onSuccess={refreshUsers} />
+                          <div className="flex flex-col gap-1">
+                            <span className="text-yellow-200 text-xs font-bold uppercase font-dyna">Adicionar</span>
+                            <div className="flex justify-end items-center gap-2 pr-0">
+                              <AddSaldo userId={u.id} onSuccess={refreshUsers} />
+                            </div>
+                          </div>
+                          <div className="flex flex-col gap-1">
+                            <span className="text-yellow-200 text-xs font-bold uppercase font-dyna">Remover</span>
+                            <div className="flex justify-end items-center gap-2 pr-0">
+                              <RemoverSaldo userId={u.id} onSuccess={refreshUsers} />
+                            </div>
                           </div>
                         </div>
                       ))}
                     </div>
+                    {/* Desktop grid */}
+                    <div className="hidden md:block">
+                      <div className="grid grid-cols-4 text-center mb-4 w-full">
+                        <div className="text-yellow-200 text-2xl font-extrabold uppercase text-left pl-4 font-dyna">NOME</div>
+                        <div className="text-yellow-200 text-2xl font-extrabold uppercase font-dyna">SALDO</div>
+                        <div className="text-yellow-200 text-2xl font-extrabold uppercase font-dyna">ADICIONAR</div>
+                        <div className="text-yellow-200 text-2xl font-extrabold uppercase font-dyna">REMOVER</div>
+                      </div>
+                      <div className="divide-y divide-gray-800 w-full">
+                        {users.map(u => (
+                          <div key={u.id} className="grid grid-cols-4 items-center py-3 w-full">
+                            <div className="flex items-center gap-2 text-left pl-4">
+                              <button
+                                className={`hover:scale-105 bg-red-600 hover:bg-red-700 text-white rounded px-2 py-1 text-xs font-semibold transition-colors duration-150${u.name === "admin.plus" ? " opacity-50 cursor-not-allowed" : " cursor-pointer"}`}
+                                title={u.name === "admin.plus" ? "Não é possível remover o admin.plus" : "Remover usuário"}
+                                onClick={() => handleRemoveUser(u)}
+                                disabled={u.name === "admin.plus"}
+                              >
+                                <span role="img" aria-label="remover">🗑️</span>
+                              </button>
+                              <span className="text-white text-lg font-bold">{u.name}</span>
+                            </div>
+                            <div className="text-green-400 text-lg font-bold text-center">R${u.balance}</div>
+                            <div className="flex justify-end items-center gap-2 pr-6">
+                              <AddSaldo userId={u.id} onSuccess={refreshUsers} />
+                            </div>
+                            <div className="flex justify-end items-center gap-2 pr-6">
+                              <RemoverSaldo userId={u.id} onSuccess={refreshUsers} />
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
                   </div>
                 </div>
                 {/* Formulário de criar usuário */}
-                <CriarUsuario onSuccess={refreshUsers} />
+                <div className="flex flex-col items-center justify-center w-full max-w-xs mx-auto self-start">
+                  <CriarUsuario onSuccess={refreshUsers} />
+                </div>
               </div>
             )}
             {tab === "produtos" && (
-              <div className="flex flex-col md:flex-row gap-8 w-full pt-4 md:pt-8">
+              <div className="flex flex-col md:flex-row gap-8 w-full pt-4 md:pt-8 items-start">
                 {/* Lista de produtos */}
                 <div className="flex-1 flex flex-col">
-                  <h2 className="text-4xl font-extrabold text-yellow-100 mb-6">PRODUTOS</h2>
+                  <h2 className="text-4xl font-extrabold text-black mb-6 font-dyna">PRODUTOS</h2>
                   <div className="bg-neutral-900 rounded-2xl shadow-xl p-6 w-full">
-                    <div className="grid grid-cols-7 text-center mb-4 w-full">
-                      <div className="text-yellow-200 text-2xl font-extrabold uppercase text-left pl-4">IMG</div>
-                      <div className="text-yellow-200 text-2xl font-extrabold uppercase">NOME</div>
-                      <div className="text-yellow-200 text-2xl font-extrabold uppercase">DESC</div>
-                      <div className="text-yellow-200 text-2xl font-extrabold uppercase">PREÇO</div>
-                      <div className="text-yellow-200 text-2xl font-extrabold uppercase">QTD</div>
-                      <div className="text-yellow-200 text-2xl font-extrabold uppercase">ADD</div>
-                      <div className="text-yellow-200 text-2xl font-extrabold uppercase">REM</div>
-                    </div>
-                    <div className="divide-y divide-gray-800 w-full">
+                    {/* Mobile/tablet grid de produtos */}
+                    <div className="grid grid-cols-2 sm:grid-cols-2 gap-6 justify-items-center md:hidden">
                       {products.length === 0 ? (
-                        <div className="text-gray-300 text-center py-8">Nenhum produto cadastrado ainda.</div>
+                        <div className="text-gray-300 text-center py-8 col-span-2">Nenhum produto cadastrado ainda.</div>
                       ) : (
                         products.map(p => (
-                          <div key={p.id} className="grid grid-cols-7 items-center py-4 w-full text-center">
-                            <div className="flex items-center gap-2 text-left pl-4">
+                          <div key={p.id} className="flex flex-col gap-2 bg-black/10 rounded-xl max-w-xs w-full p-4 shadow-lg border border-yellow-900/20">
+                            <div className="flex items-center gap-2">
                               <button
                                 className="hover:scale-105 cursor-pointer bg-red-600 hover:bg-red-700 text-white rounded px-2 py-1 text-xs font-semibold transition-colors duration-150 mr-2"
                                 title="Remover produto"
@@ -349,21 +441,88 @@ export default function AdminDashboard() {
                                 <Image src={p.imageUrl} alt={p.name} width={80} height={48} className="h-12 w-full object-cover mx-auto rounded-xl" style={{objectFit: 'contain'}} />
                               </div>
                             </div>
-                            <div className="text-white text-lg font-bold break-words min-w-[100px]">{p.name}</div>
-                            <div className="text-white text-base break-words max-w-xs mx-auto">{p.description}</div>
-                            <div className="text-green-400 text-lg font-bold min-w-[70px]">R$ {p.price}</div>
-                            <div className="text-yellow-200 text-lg font-bold">{p.estoque}</div>
-                            <div className="flex justify-center"><AddEstoque productId={p.id} onSuccess={refreshProducts} /></div>
-                            <div className="flex justify-center"><RemoverEstoque productId={p.id} estoqueAtual={p.estoque} onSuccess={refreshProducts} /></div> 
+                            <div className="flex flex-col gap-1 mt-2">
+                              <span className="text-yellow-200 text-xs font-bold uppercase font-dyna">Nome</span>
+                              <span className="text-white text-lg font-bold break-words min-w-[100px] font-dyna">{p.name}</span>
+                            </div>
+                            <div className="flex flex-col gap-1">
+                              <span className="text-yellow-200 text-xs font-bold uppercase font-dyna">Descrição</span>
+                              <span className="text-white text-base break-words max-w-xs mx-auto">{p.description}</span>
+                            </div>
+                            <div className="flex flex-col gap-1">
+                              <span className="text-yellow-200 text-xs font-bold uppercase font-dyna">Preço</span>
+                              <span className="text-green-400 text-lg font-bold min-w-[70px] font-dyna">R$ {p.price}</span>
+                            </div>
+                            <div className="flex flex-col gap-1">
+                              <span className="text-yellow-200 text-xs font-bold uppercase font-dyna">Estoque</span>
+                              <span className="text-yellow-200 text-lg font-bold">{p.estoque}</span>
+                            </div>
+                            <div className="flex flex-col gap-1">
+                              <span className="text-yellow-200 text-xs font-bold uppercase font-dyna">Adicionar</span>
+                              <div className="flex justify-center"><AddEstoque productId={p.id} onSuccess={refreshProducts} /></div>
+                            </div>
+                            <div className="flex flex-col gap-1">
+                              <span className="text-yellow-200 text-xs font-bold uppercase font-dyna">Remover</span>
+                              <div className="flex justify-center"><RemoverEstoque productId={p.id} estoqueAtual={p.estoque} onSuccess={refreshProducts} /></div>
+                            </div>
                           </div>
                         ))
                       )}
+                    </div>
+                    {/* Desktop grid de produtos */}
+                    <div className="hidden md:block">
+                      <div className="grid grid-cols-7 text-center mb-4 w-full">
+                        <div className="text-yellow-200 text-2xl font-extrabold uppercase text-left pl-4 font-dyna">IMG</div>
+                        <div className="text-yellow-200 text-2xl font-extrabold uppercase font-dyna">NOME</div>
+                        <div className="text-yellow-200 text-2xl font-extrabold uppercase font-dyna">DESC</div>
+                        <div className="text-yellow-200 text-2xl font-extrabold uppercase font-dyna">PREÇO</div>
+                        <div className="text-yellow-200 text-2xl font-extrabold uppercase font-dyna">QTD</div>
+                        <div className="text-yellow-200 text-2xl font-extrabold uppercase font-dyna">ADD</div>
+                        <div className="text-yellow-200 text-2xl font-extrabold uppercase font-dyna">REM</div>
+                      </div>
+                      <div className="divide-y divide-gray-800 w-full">
+                        {products.length === 0 ? (
+                          <div className="text-gray-300 text-center py-8 col-span-7">Nenhum produto cadastrado ainda.</div>
+                        ) : (
+                          products.map(p => (
+                            <div key={p.id} className="grid grid-cols-7 items-center py-4 w-full text-center">
+                              <div className="flex items-center gap-2 text-left pl-4">
+                                <button
+                                  className="hover:scale-105 cursor-pointer bg-red-600 hover:bg-red-700 text-white rounded px-2 py-1 text-xs font-semibold transition-colors duration-150 mr-2"
+                                  title="Remover produto"
+                                  onClick={async () => {
+                                    if (confirm("Remover produto?")) {
+                                      await fetch("/api/products", {
+                                        method: "DELETE",
+                                        headers: { "Content-Type": "application/json" },
+                                        body: JSON.stringify({ id: p.id }),
+                                      });
+                                      refreshProducts();
+                                    }
+                                  }}
+                                >
+                                  <span role="img" aria-label="remover">🗑️</span>
+                                </button>
+                                <div className="bg-gray-200 rounded-xl w-20 h-12 flex items-center justify-center overflow-hidden">
+                                  <Image src={p.imageUrl} alt={p.name} width={80} height={48} className="h-12 w-full object-cover mx-auto rounded-xl" style={{objectFit: 'contain'}} />
+                                </div>
+                              </div>
+                              <div className="text-white text-lg font-bold break-words min-w-[100px] font-dyna">{p.name}</div>
+                              <div className="text-white text-base break-words max-w-xs mx-auto">{p.description}</div>
+                              <div className="text-green-400 text-lg font-bold min-w-[70px] font-dyna">R$ {p.price}</div>
+                              <div className="text-yellow-200 text-lg font-bold">{p.estoque}</div>
+                              <div className="flex justify-center"><AddEstoque productId={p.id} onSuccess={refreshProducts} /></div>
+                              <div className="flex justify-center"><RemoverEstoque productId={p.id} estoqueAtual={p.estoque} onSuccess={refreshProducts} /></div>
+                            </div>
+                          ))
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>
                 {/* Formulário de cadastrar produto */}
                 <div className="flex flex-col items-center justify-center w-full max-w-xs mx-auto">
-                  <h2 className="text-4xl font-extrabold text-yellow-100 mb-6 text-center">CADASTRAR</h2>
+                  <h2 className="text-4xl font-extrabold text-black md:text-yellow-600 mb-6 text-center font-dyna">CADASTRAR</h2>
                   <div className="bg-neutral-900 rounded-2xl shadow-xl p-8 w-full">
                     <FormProduto onSuccess={refreshProducts} />
                   </div>
@@ -373,7 +532,7 @@ export default function AdminDashboard() {
           </>
         )}
       </div>
-      <footer className="z-10 w-full text-center text-gray-200 text-base opacity-90 py-6 bg-black border-t border-neutral-800 mt-auto">
+      <footer className="z-10 w-full text-center text-black text-base opacity-90 py-6 bg-gray-300 border-t border-white-800 mt-auto font-bold">
         © Plus Promotora 2025
       </footer>
       <style jsx global>{`
@@ -387,6 +546,21 @@ export default function AdminDashboard() {
   }
 `}</style>
       <Popup message={globalPopup?.msg || ""} type={globalPopup?.type || "error"} onClose={() => setGlobalPopup(null)} />
+      {/* Imagens na metade inferior */}
+      <div className="fixed left-0 right-0 w-full flex items-start overflow-hidden" style={{top: '50%', height: '50%', zIndex: 2}}>
+        <div className="flex flex-row w-full h-full items-start">
+          {[1,2,3,4,5].map(n => (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              key={n}
+              src={`/${n}.webp`}
+              alt={`Banner ${n}`}
+              className="object-top object-cover h-full w-1/5 max-h-none rounded-none drop-shadow- blur-[1px] opacity-80"
+              draggable="false"
+            />
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
@@ -522,7 +696,7 @@ function CriarUsuario({ onSuccess }: { onSuccess: () => void }) {
 
   return (
     <div className="flex flex-col items-center justify-center w-full max-w-xs mx-auto">
-      <h2 className="text-4xl font-extrabold text-yellow-100 mb-6 text-center">CRIAR</h2>
+      <h2 className="text-4xl font-extrabold text-black md:text-yellow-600 mb-6 text-center font-dyna">CRIAR</h2>
       <div className="bg-neutral-900 rounded-2xl shadow-xl p-8 w-full">
         <form className="flex flex-col gap-5" onSubmit={e => { e.preventDefault(); cadastrar(); }}>
           <div className="relative">
@@ -536,7 +710,7 @@ function CriarUsuario({ onSuccess }: { onSuccess: () => void }) {
               disabled={loading}
               required
             />
-            <span className="absolute -top-2 left-3 font-bold text-base tracking-wide bg-neutral-900 px-1 z-10 label-admin" style={{lineHeight:1}}>Usuário</span>
+            <span className="absolute -top-2 left-3 font-bold text-base tracking-wide bg-neutral-900 px-1 z-10 label-admin font-dyna" style={{lineHeight:1}}>Usuário</span>
           </div>
           <div className="relative">
             <input
@@ -549,14 +723,14 @@ function CriarUsuario({ onSuccess }: { onSuccess: () => void }) {
               disabled={loading}
               required
             />
-            <span className="absolute -top-2 left-3 font-bold text-base tracking-wide bg-neutral-900 px-1 z-10 label-admin" style={{lineHeight:1}}>Senha</span>
+            <span className="absolute -top-2 left-3 font-bold text-base tracking-wide bg-neutral-900 px-1 z-10 label-admin font-dyna" style={{lineHeight:1}}>Senha</span>
           </div>
           <button
             type="submit"
-            className="hover:scale-105 cursor-pointer bg-yellow-200 hover:bg-yellow-300 text-black font-bold rounded-xl px-4 py-3 text-lg shadow disabled:opacity-60 transition mt-2"
+            className="hover:cursor-pointer bg-yellow-600 text-black font-bold text-2xl px-10 py-1 rounded-full shadow-lg hover:bg-yellow-700 hover:border-yellow-700 transition-transform transform hover:scale-105 border-b-4 border-r-4 border-black md:text-3xl"
             disabled={loading}
           >
-            {loading ? "Criando..." : "Criar Usuário"}
+            {loading ? "CRIANDO..." : "CRIAR"}
           </button>
           <Popup message={popup?.msg || ""} type={popup?.type || "error"} onClose={() => setPopup(null)} />
         </form>
@@ -603,26 +777,26 @@ function FormProduto({ onSuccess }: { onSuccess: () => void }) {
     <form className="flex flex-col gap-5" onSubmit={e => { e.preventDefault(); cadastrar(); }}>
       <div className="relative">
         <input type="text" value={nome} onChange={e => setNome(e.target.value)} className="peer w-full rounded-2xl px-4 bg-black text-white border-4 border-white focus:border-yellow-200 outline-none text-base font-semibold transition-all duration-150" style={{ paddingTop: '0.75rem', paddingBottom: '0.75rem', height: '44px' }} autoComplete="off" disabled={loading} required />
-        <span className="absolute -top-2 left-3 font-bold text-base tracking-wide bg-neutral-900 px-1 z-10 label-admin" style={{lineHeight:1}}>Nome do Produto</span>
+        <span className="absolute -top-2 left-3 font-bold text-base tracking-wide bg-neutral-900 px-1 z-10 label-admin font-dyna" style={{lineHeight:1}}>Nome do Produto</span>
       </div>
       <div className="relative">
         <input type="text" value={descricao} onChange={e => setDescricao(e.target.value)} className="peer w-full rounded-2xl px-4 bg-black text-white border-4 border-white focus:border-yellow-200 outline-none text-base font-semibold transition-all duration-150" style={{ paddingTop: '0.75rem', paddingBottom: '0.75rem', height: '44px' }} autoComplete="off" disabled={loading} required />
-        <span className="absolute -top-2 left-3 font-bold text-base tracking-wide bg-neutral-900 px-1 z-10 label-admin" style={{lineHeight:1}}>Descrição</span>
+        <span className="absolute -top-2 left-3 font-bold text-base tracking-wide bg-neutral-900 px-1 z-10 label-admin font-dyna" style={{lineHeight:1}}>Descrição</span>
       </div>
       <div className="relative">
         <input type="number" min="0" step="0.01" value={preco} onChange={e => setPreco(e.target.value)} className="peer w-full rounded-2xl px-4 bg-black text-white border-4 border-white focus:border-yellow-200 outline-none text-base font-semibold transition-all duration-150" style={{ paddingTop: '0.75rem', paddingBottom: '0.75rem', height: '44px' }} autoComplete="off" disabled={loading} required />
-        <span className="absolute -top-2 left-3 font-bold text-base tracking-wide bg-neutral-900 px-1 z-10 label-admin" style={{lineHeight:1}}>Preço</span>
+        <span className="absolute -top-2 left-3 font-bold text-base tracking-wide bg-neutral-900 px-1 z-10 label-admin font-dyna" style={{lineHeight:1}}>Preço</span>
       </div>
       <div className="relative">
         <input type="number" min="0" step="1" value={estoque} onChange={e => setEstoque(e.target.value)} className="peer w-full rounded-2xl px-4 bg-black text-white border-4 border-white focus:border-yellow-200 outline-none text-base font-semibold transition-all duration-150" style={{ paddingTop: '0.75rem', paddingBottom: '0.75rem', height: '44px' }} autoComplete="off" disabled={loading} required />
-        <span className="absolute -top-2 left-3 font-bold text-base tracking-wide bg-neutral-900 px-1 z-10 label-admin" style={{lineHeight:1}}>Estoque Inicial</span>
+        <span className="absolute -top-2 left-3 font-bold text-base tracking-wide bg-neutral-900 px-1 z-10 label-admin font-dyna" style={{lineHeight:1}}>Estoque Inicial</span>
       </div>
       <div className="relative">
         <input type="text" value={imagem} onChange={e => setImagem(e.target.value)} className="peer w-full rounded-2xl px-4 bg-black text-white border-4 border-white focus:border-yellow-200 outline-none text-base font-semibold transition-all duration-150" style={{ paddingTop: '0.75rem', paddingBottom: '0.75rem', height: '44px' }} autoComplete="off" disabled={loading} required />
-        <span className="absolute -top-2 left-3 font-bold text-base tracking-wide bg-neutral-900 px-1 z-10 label-admin" style={{lineHeight:1}}>URL da Imagem</span>
+        <span className="absolute -top-2 left-3 font-bold text-base tracking-wide bg-neutral-900 px-1 z-10 label-admin font-dyna" style={{lineHeight:1}}>URL da Imagem</span>
       </div>
-      <button type="submit" className="hover:scale-105 cursor-pointer bg-yellow-200 hover:bg-yellow-300 text-black font-bold rounded-xl px-4 py-3 text-lg shadow disabled:opacity-60 transition mt-2" disabled={loading}>
-        {loading ? "Cadastrando..." : "Cadastrar Produto"}
+      <button type="submit" className="hover:cursor-pointer bg-yellow-600 text-black font-bold text-2xl px-10 py-1 rounded-full shadow-lg hover:bg-yellow-700 hover:border-yellow-700 transition-transform transform hover:scale-105 border-b-4 border-r-4 border-black md:text-3xl" disabled={loading}>
+        {loading ? "CADASTRANDO..." : "CADASTRAR"}
       </button>
       <Popup message={popup?.msg || ""} type={popup?.type || "error"} onClose={() => setPopup(null)} />
     </form>

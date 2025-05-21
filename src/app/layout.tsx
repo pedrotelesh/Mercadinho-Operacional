@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Mercadinho Operacional",
+  title: "Mercadinho Plus",
   description: "Mercado virtual para funcionários",
   icons: {
     icon: "/favicon.ico",
