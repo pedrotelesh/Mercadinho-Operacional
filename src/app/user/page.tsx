@@ -354,7 +354,7 @@ export default function UserDashboard() {
                 <ul className="divide-y divide-gray-700">
                   {Array.isArray(history) && groupHistory(history).map((group, idx) => (
                     <li key={idx} className="py-2">
-                      <div className="font-bold text-lg text-center text-white mb-1">
+                      <div className="font-bold text-lg text-center text-white mb-1 font-dyna">
                         {group.label}
                       </div>
                       {group.items.map((h) => (
