@@ -190,7 +190,7 @@ export default function UserDashboard() {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40" style={{backdropFilter:'blur(2px)'}}>
           <div ref={saldoInfoRef} className="relative bg-white rounded-2xl shadow-2xl max-w-2xl w-full mx-2 p-0 flex flex-col max-h-[90vh]">
             <button
-              className="absolute top-2 right-2 text-2xl font-bold text-black bg-white/80 rounded-full w-10 h-10 flex items-center justify-center hover:bg-red-200 z-10 border border-gray-300"
+              className="absolute top-2 right-2 text-2xl font-bold text-black bg-white/80 rounded-full w-10 h-10 flex items-center justify-center hover:bg-red-200 z-10 border border-gray-300 cursor-pointer"
               onClick={() => setShowSaldoInfo(false)}
               aria-label="Fechar"
               tabIndex={0}
@@ -285,7 +285,7 @@ export default function UserDashboard() {
           </h1>
           <div className="flex gap-4 items-center">
             <button
-              className="flex items-center justify-center w-6 h-6 rounded-full bg-green-100 border border-green-300 text-green-900 hover:bg-green-200 focus:outline-none focus:ring-2 focus:ring-green-400 mr-2"
+              className="flex items-center justify-center w-6 h-6 rounded-full bg-green-100 border  text-green-900 hover:bg-green-200 focus:outline-none focus:ring-2 focus:ring-green-400 mr-2 border-b-3 border-r-3 border-black hover:scale-105 transition-transform transform cursor-pointer"
               title="Como ganhar saldo?"
               onClick={() => setShowSaldoInfo(true)}
               style={{ fontSize: '1.1rem', lineHeight: 1 }}
@@ -304,7 +304,7 @@ export default function UserDashboard() {
             <h2 className="text-4xl font-extrabold text-black mb-4 md:mb-6 font-dyna">ITENS DISPONÍVEIS</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
               {products.map(prod => (
-                <div key={prod.id} className="bg-neutral-900 rounded-2xl shadow-xl p-6 flex flex-col items-center text-center min-w-[280px]">
+                <div key={prod.id} className="bg-neutral-900 rounded-2xl shadow-xl p-6 flex flex-col items-center text-center min-w-[280px] border-b-4 border-r-4 border-gray-600 hover:border-gray-400">
                   <div className="text-2xl font-extrabold text-yellow-200 mb-1 font-dyna">{prod.name}</div>
                   <div className="text-lg font-bold text-gray-100 mb-1 font-dyna">R${prod.price.toFixed(2)}</div>
                   <div className="text-yellow-200 font-bold mb-2 font-dyna">Estoque: {prod.estoque}</div>
@@ -314,7 +314,7 @@ export default function UserDashboard() {
                       alt={prod.name} 
                       width={120} 
                       height={120} 
-                      className="h-20 w-full object-cover mx-auto rounded-xl hover:scale-105" 
+                      className="h-20 w-full object-cover mx-auto rounded-xl hover:scale-125 transition-transform duration-300" 
                       style={{objectFit: 'contain'}}
                       loading="lazy"
                     />
