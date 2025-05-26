@@ -33,7 +33,8 @@ interface Product {
   description: string;
   price: number;
   imageUrl: string;
-  estoque: number; // Adicionado campo de estoque
+  estoque: number;
+  tipo: string; // categoria
 }
 interface Purchase {
   id: number;
@@ -54,6 +55,7 @@ export default function AdminDashboard() {
   const [expandedUsers, setExpandedUsers] = useState<{ [userId: number]: boolean }>({});
   const [globalPopup, setGlobalPopup] = useState<{ msg: string; type: "error" | "success" } | null>(null);
   const router = useRouter();
+  const [qtdInputs, setQtdInputs] = useState<{ [id: number]: string }>({});
 
   useEffect(() => {
     const u = localStorage.getItem("user");
@@ -447,7 +449,7 @@ export default function AdminDashboard() {
                             </div>
                             <div className="flex flex-col gap-1">
                               <span className="text-yellow-200 text-xs font-bold uppercase font-dyna">Descrição</span>
-                              <span className="text-white text-base break-words max-w-xs mx-auto">{p.description}</span>
+                              <span className="text-white text-base break-words">{p.description}</span>
                             </div>
                             <div className="flex flex-col gap-1">
                               <span className="text-yellow-200 text-xs font-bold uppercase font-dyna">Preço</span>
@@ -455,7 +457,11 @@ export default function AdminDashboard() {
                             </div>
                             <div className="flex flex-col gap-1">
                               <span className="text-yellow-200 text-xs font-bold uppercase font-dyna">Estoque</span>
-                              <span className="text-yellow-200 text-lg font-bold">{p.estoque}</span>
+                              <span className= "text-lg font-bold">{p.estoque}</span>
+                            </div>
+                            <div className="flex flex-col gap-1">
+                              <span className="text-yellow-200 text-xs font-bold uppercase font-dyna">Categoria</span>
+                              <span className="text-lg font-bold uppercase font-dyna">{p.tipo || 'TODOS'}</span>
                             </div>
                             <div className="flex flex-col gap-1">
                               <span className="text-yellow-200 text-xs font-bold uppercase font-dyna">Adicionar</span>
@@ -477,8 +483,8 @@ export default function AdminDashboard() {
                         <div className="text-yellow-200 text-2xl font-extrabold uppercase font-dyna">DESC</div>
                         <div className="text-yellow-200 text-2xl font-extrabold uppercase font-dyna">PREÇO</div>
                         <div className="text-yellow-200 text-2xl font-extrabold uppercase font-dyna">QTD</div>
-                        <div className="text-yellow-200 text-2xl font-extrabold uppercase font-dyna">ADD</div>
-                        <div className="text-yellow-200 text-2xl font-extrabold uppercase font-dyna">REM</div>
+                        <div className="text-yellow-200 text-2xl font-extrabold uppercase font-dyna">CAT</div>
+                        <div className="text-yellow-200 text-2xl font-extrabold uppercase font-dyna">ADD/REM</div>
                       </div>
                       <div className="divide-y divide-gray-800 w-full">
                         {products.length === 0 ? (
@@ -510,9 +516,54 @@ export default function AdminDashboard() {
                               <div className="text-white text-lg font-bold break-words min-w-[100px] font-dyna">{p.name}</div>
                               <div className="text-white text-base break-words max-w-xs mx-auto">{p.description}</div>
                               <div className="text-green-400 text-lg font-bold min-w-[70px] font-dyna">R$ {p.price}</div>
-                              <div className="text-yellow-200 text-lg font-bold">{p.estoque}</div>
-                              <div className="flex justify-center"><AddEstoque productId={p.id} onSuccess={refreshProducts} /></div>
-                              <div className="flex justify-center"><RemoverEstoque productId={p.id} estoqueAtual={p.estoque} onSuccess={refreshProducts} /></div>
+                              <div className="text-lg font-bold">{p.estoque}</div>
+                              <div className= "text-lg font-bold uppercase break-words max-w-[80px]">{p.tipo || 'TODOS'}</div>
+                              <div className="flex gap-2 items-center justify-center">
+                                <input
+                                  type="number"
+                                  min="0"
+                                  step="1"
+                                  value={qtdInputs[p.id] ?? ''}
+                                  onChange={e => {
+                                    const v = e.target.value;
+                                    setQtdInputs(prev => ({ ...prev, [p.id]: v }));
+                                  }}
+                                  className="border border-gray-400 p-1 rounded w-14 text-sm bg-black text-white"
+                                  placeholder="Qtd"
+                                />
+                                <button
+                                  className="hover:scale-105 cursor-pointer bg-green-700 hover:bg-green-800 text-white font-bold rounded px-3 py-1 text-base disabled:opacity-50"
+                                  onClick={async () => {
+                                    const v = parseInt(qtdInputs[p.id]);
+                                    if (isNaN(v) || v < 0) return;
+                                    await fetch("/api/products", {
+                                      method: "PATCH",
+                                      headers: { "Content-Type": "application/json" },
+                                      body: JSON.stringify({ id: p.id, amount: v }),
+                                    });
+                                    setQtdInputs(prev => ({ ...prev, [p.id]: '' }));
+                                    refreshProducts();
+                                  }}
+                                  disabled={!qtdInputs[p.id] || isNaN(parseInt(qtdInputs[p.id])) || parseInt(qtdInputs[p.id]) < 0}
+                                  type="button"
+                                >+</button>
+                                <button
+                                  className="hover:scale-105 cursor-pointer bg-red-700 hover:bg-red-800 text-white font-bold rounded px-3 py-1 text-base disabled:opacity-50"
+                                  onClick={async () => {
+                                    const v = parseInt(qtdInputs[p.id]);
+                                    if (isNaN(v) || v < 0 || v > p.estoque) return;
+                                    await fetch("/api/products", {
+                                      method: "PATCH",
+                                      headers: { "Content-Type": "application/json" },
+                                      body: JSON.stringify({ id: p.id, amount: -v }),
+                                    });
+                                    setQtdInputs(prev => ({ ...prev, [p.id]: '' }));
+                                    refreshProducts();
+                                  }}
+                                  disabled={!qtdInputs[p.id] || isNaN(parseInt(qtdInputs[p.id])) || parseInt(qtdInputs[p.id]) < 0 || parseInt(qtdInputs[p.id]) > p.estoque}
+                                  type="button"
+                                >-</button>
+                              </div>
                             </div>
                           ))
                         )}
@@ -521,7 +572,7 @@ export default function AdminDashboard() {
                   </div>
                 </div>
                 {/* Formulário de cadastrar produto */}
-                <div className="flex flex-col items-center justify-center w-full max-w-xs mx-auto">
+                <div className="w-full md:w-1/4 flex flex-col items-center justify-center max-w-xs mx-auto">
                   <h2 className="text-4xl font-extrabold text-black md:text-yellow-600 mb-6 text-center font-dyna">CADASTRAR</h2>
                   <div className="bg-neutral-900 rounded-2xl shadow-xl p-8 w-full">
                     <FormProduto onSuccess={refreshProducts} />
@@ -745,6 +796,7 @@ function FormProduto({ onSuccess }: { onSuccess: () => void }) {
   const [preco, setPreco] = useState("");
   const [imagem, setImagem] = useState("");
   const [estoque, setEstoque] = useState("");
+  const [tipo, setTipo] = useState("");
   const [loading, setLoading] = useState(false);
   const [popup, setPopup] = useState<{ msg: string; type: "error" | "success" } | null>(null);
 
@@ -761,11 +813,11 @@ function FormProduto({ onSuccess }: { onSuccess: () => void }) {
     const res = await fetch("/api/products", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name: nome, description: descricao, price: valor, imageUrl: imagem, estoque: estoqueInt }),
+      body: JSON.stringify({ name: nome, description: descricao, price: valor, imageUrl: imagem, estoque: estoqueInt, tipo }),
     });
     setLoading(false);
     if (res.ok) {
-      setNome(""); setDescricao(""); setPreco(""); setImagem(""); setEstoque("");
+      setNome(""); setDescricao(""); setPreco(""); setImagem(""); setEstoque(""); setTipo("");
       setPopup({ msg: "Produto cadastrado!", type: "success" });
       onSuccess();
     } else {
@@ -792,10 +844,19 @@ function FormProduto({ onSuccess }: { onSuccess: () => void }) {
         <span className="absolute -top-2 left-3 font-bold text-base tracking-wide bg-neutral-900 px-1 z-10 label-admin font-dyna" style={{lineHeight:1}}>Estoque Inicial</span>
       </div>
       <div className="relative">
+        <select value={tipo} onChange={e => setTipo(e.target.value)} className="peer w-full rounded-2xl px-4 bg-black text-white border-4 border-white focus:border-yellow-200 outline-none text-base font-semibold transition-all duration-150 h-[44px]" disabled={loading} required>
+          <option value="">TODOS</option>
+          <option value="LANCHONETE">LANCHONETE</option>
+          <option value="ELETRÔNICOS">ELETRÔNICOS</option>
+          <option value="VALES">VALES</option>
+        </select>
+        <span className="absolute -top-2 left-3 font-bold text-base tracking-wide bg-neutral-900 px-1 z-10 label-admin font-dyna" style={{lineHeight:1}}>Categoria</span>
+      </div>
+      <div className="relative">
         <input type="text" value={imagem} onChange={e => setImagem(e.target.value)} className="peer w-full rounded-2xl px-4 bg-black text-white border-4 border-white focus:border-yellow-200 outline-none text-base font-semibold transition-all duration-150" style={{ paddingTop: '0.75rem', paddingBottom: '0.75rem', height: '44px' }} autoComplete="off" disabled={loading} required />
         <span className="absolute -top-2 left-3 font-bold text-base tracking-wide bg-neutral-900 px-1 z-10 label-admin font-dyna" style={{lineHeight:1}}>URL da Imagem</span>
       </div>
-      <button type="submit" className="hover:cursor-pointer bg-yellow-600 text-black font-bold text-2xl px-10 py-1 rounded-full shadow-lg hover:bg-yellow-700 hover:border-yellow-700 transition-transform transform hover:scale-105 border-b-4 border-r-4 border-black md:text-3xl" disabled={loading}>
+      <button type="submit" className="hover:cursor-pointer bg-yellow-600 text-black font-bold text-2xl py-1 rounded-full shadow-lg hover:bg-yellow-700 hover:border-yellow-700 transition-transform transform hover:scale-105 border-b-4 border-r-4 border-black md:text-3xl" disabled={loading}>
         {loading ? "CADASTRANDO..." : "CADASTRAR"}
       </button>
       <Popup message={popup?.msg || ""} type={popup?.type || "error"} onClose={() => setPopup(null)} />

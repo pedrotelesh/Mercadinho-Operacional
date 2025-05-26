@@ -9,9 +9,16 @@ export async function GET() {
 
 // POST: cria um novo produto (admin)
 export async function POST(req: NextRequest) {
-  const { name, description, price, imageUrl, estoque } = await req.json();
+  const { name, description, price, imageUrl, estoque, tipo } = await req.json();
   const product = await prisma.product.create({
-    data: { name, description, price, imageUrl, estoque: typeof estoque === 'number' && estoque >= 0 ? estoque : 0 },
+    data: {
+      name,
+      description,
+      price,
+      imageUrl,
+      estoque: typeof estoque === 'number' && estoque >= 0 ? estoque : 0,
+      tipo: typeof tipo === 'string' ? tipo : '',
+    },
   });
   return NextResponse.json(product);
 }

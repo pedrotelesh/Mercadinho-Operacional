@@ -134,7 +134,8 @@ exports.Prisma.ProductScalarFieldEnum = {
   description: 'description',
   price: 'price',
   imageUrl: 'imageUrl',
-  estoque: 'estoque'
+  estoque: 'estoque',
+  tipo: 'tipo'
 };
 
 exports.Prisma.PurchaseScalarFieldEnum = {
@@ -156,10 +157,16 @@ exports.Prisma.UserOrderByRelevanceFieldEnum = {
   password: 'password'
 };
 
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
+};
+
 exports.Prisma.ProductOrderByRelevanceFieldEnum = {
   name: 'name',
   description: 'description',
-  imageUrl: 'imageUrl'
+  imageUrl: 'imageUrl',
+  tipo: 'tipo'
 };
 
 exports.Prisma.PurchaseOrderByRelevanceFieldEnum = {

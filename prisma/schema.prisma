@@ -30,6 +30,7 @@ model Product {
   price       Float
   imageUrl    String
   estoque     Int      @default(0) // Novo campo de estoque
+  tipo        String?  @default("") // Categoria: LANCHONETE, ELETRÔNICOS, VALES, vazio para TODOS
   purchases   Purchase[]
 }
 
