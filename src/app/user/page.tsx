@@ -314,11 +314,11 @@ export default function UserDashboard() {
         <div className="flex-1">
           <h2 className="text-4xl font-extrabold text-black mb-4 md:mb-6 font-dyna">ITENS DISPONÍVEIS</h2>
           {/* CATEGORIAS */}
-          <div className="flex gap-2 mb-6 flex-wrap justify-start flex-auto md:flex-wrap">
+          <div className="flex gap-2 mb-6 flex-wrap justify-center flex-auto md:flex-wrap md:justify-start">
             {categorias.map(cat => (
               <button
                 key={cat.value}
-                className={`px-4 py-2 rounded-xl cursor-pointer font-bold transition font-dyna basis-1/3 md:basis-auto border-b-4 border-r-4 border-black ${categoria === cat.value ? "bg-yellow-300 border-yellow-600 text-black" : "bg-gray-100 border-black text-gray-700 hover:bg-yellow-100"}`}
+                className={`px-4 py-2 rounded-xl cursor-pointer font-bold transition font-dyna basis-1/3 md:basis-auto border-b-4 border-r-4 border-black ${categoria === cat.value ? "bg-yellow-300 border-yellow-600 text-black" : "bg-gray-100 border-black text-black hover:bg-yellow-100"}`}
                 onClick={() => setCategoria(cat.value)}
               >
                 {cat.label}
@@ -327,7 +327,7 @@ export default function UserDashboard() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
             {produtosFiltrados.map(prod => (
-              <div key={prod.id} className="bg-neutral-900 rounded-2xl shadow-xl p-6 flex flex-col items-center text-center min-w-[280px] border-b-4 border-r-4 border-gray-600 hover:border-gray-400">
+              <div key={prod.id} className="bg-neutral-900 rounded-2xl shadow-xl p-6 flex flex-col items-center text-center min-w-[280px] group">
                 <div className="text-2xl font-extrabold text-yellow-200 mb-1 font-dyna">{prod.name}</div>
                 <div className="text-lg font-bold text-gray-100 mb-1 font-dyna">R${prod.price.toFixed(2)}</div>
                 <div className="text-yellow-200 font-bold mb-2 font-dyna">Estoque: {prod.estoque}</div>
@@ -337,7 +337,7 @@ export default function UserDashboard() {
                     alt={prod.name} 
                     width={120} 
                     height={120} 
-                    className="h-20 w-full object-cover mx-auto rounded-xl hover:scale-125 transition-transform duration-300" 
+                    className="h-20 w-full object-cover mx-auto rounded-xl transition-transform duration-300 group-hover:scale-125" 
                     style={{objectFit: 'contain'}}
                     loading="lazy"
                   />
